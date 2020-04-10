@@ -5,18 +5,22 @@ apply plugin: 'java'
 buildscript {
     repositories {
         mavenCentral()
+        google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:3.6.2'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
+        classpath 'org.jacoco:org.jacoco.core:0.8.5'
     }
 }
 
 def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
 }
-test{
-    testLogging{
+
+test {
+    testLogging {
         exceptionFormat = 'full'
     }
 }
@@ -25,8 +29,8 @@ allprojects {
     group = GROUP
 
     repositories {
-        mavenLocal()
         mavenCentral()
+        google()
         jcenter()
     }
 }
@@ -35,7 +39,7 @@ subprojects { proj ->
     apply plugin: 'jacoco'
 
     jacoco {
-        version "0.7.1.201405082137"
+        version "0.8.1"
     }
 
     task jacocoTestReport(type: JacocoReport) {
@@ -45,12 +49,12 @@ subprojects { proj ->
             xml.enabled = true
             html.enabled = true
         }
-        classDirectories = fileTree(
-            dir: 'build/intermediates/classes/debug',
-            excludes: ['**/R*.class',
-                       '**/BuildConfig*'])
-        sourceDirectories = files('src/main/java')
-        executionData = files('build/jacoco/testDebugUnitTest.exec')
+        getClassDirectories().setFrom(
+                dir: 'build/intermediates/classes/debug',
+                excludes: ['**/R*.class',
+                           '**/BuildConfig*'])
+        getSourceDirectories().setFrom('src/main/java')
+        getExecutionData().setFrom('build/jacoco/testDebugUnitTest.exec')
         doFirst {
             files('build/intermediates/classes/debug').getFiles().each { file ->
                 if (file.name.contains('$$')) {
@@ -62,7 +66,7 @@ subprojects { proj ->
 }
 
 jacoco {
-    toolVersion "0.7.1.201405082137"
+    toolVersion "0.8.1"
 }
 
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
@@ -70,10 +74,10 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     description = 'Generates an aggregate report from all subprojects'
     dependsOn(subprojects.jacocoTestReport)
 
-    additionalSourceDirs = files('library/src/main/java')
-    sourceDirectories = files('library/src/main/java')
-    classDirectories = files('library/build/intermediates/classes/debug')
-    executionData = files(subprojects.jacocoTestReport.executionData)
+    getAdditionalSourceDirs().setFrom('library/src/main/java')
+    sourceDirectories.from = files('library/src/main/java')
+    classDirectories.from = files('library/build/intermediates/classes/debug')
+    executionData.from = files(subprojects.jacocoTestReport.executionData)
 
     reports {
         html.enabled = true
@@ -85,7 +89,7 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     }
 
     doFirst {
-        executionData = files(executionData.findAll { it.exists() })
+        getExecutionData.setFrom(executionData.findAll { it.exists() })
     }
 }
 
