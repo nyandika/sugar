@@ -37,6 +37,7 @@ local.properties
 ._.DS_Store
 
 project.properties
+github.properties
 
 .settings
 build/

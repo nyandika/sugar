@@ -8,7 +8,7 @@ public class MigrationFileParser {
     private String content;
 
     /**
-     * @param content
+     * @param content file string to parse
      */
     public MigrationFileParser(String content){
         this.content = content.replaceAll("(\\/\\*([\\s\\S]*?)\\*\\/)|(--(.)*)|(\n)","");

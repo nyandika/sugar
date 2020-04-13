@@ -5,13 +5,14 @@ import android.util.Log;
 
 import static com.orm.SugarContext.getSugarContext;
 
-public final class SugarTransactionHelper {
+final class SugarTransactionHelper {
     private static final String LOG_TAG = SugarTransactionHelper.class.getSimpleName();
 
     //Prevent instantiation..
-    private SugarTransactionHelper() { }
+    private SugarTransactionHelper() {
+    }
 
-    public static void doInTransaction(Callback callback) {
+    static void doInTransaction(Callback callback) {
         final SQLiteDatabase database = getSugarContext().getSugarDb().getDB();
         database.beginTransaction();
 

@@ -30,7 +30,7 @@ public class Select<T> implements Iterable {
     private String offset = "";
     private List<String> args = new ArrayList<>();
 
-    public Select(Class<T> record) {
+    private Select(Class<T> record) {
         this.record = record;
     }
 
@@ -38,32 +38,32 @@ public class Select<T> implements Iterable {
         return new Select<>(record);
     }
 
-    public Select<T> orderBy(String prop) {
+    Select<T> orderBy(String prop) {
         this.orderBy = prop;
         return this;
     }
 
-    public Select<T> groupBy(String prop) {
+    Select<T> groupBy(String prop) {
         this.groupBy = prop;
         return this;
     }
 
-    public Select<T> limit(String limit) {
+    Select<T> limit(String limit) {
         this.limit = limit;
         return this;
     }
 
-    public Select<T> offset(String offset) {
+    Select<T> offset(String offset) {
         this.offset = offset;
         return this;
     }
 
-    public Select<T> where(String whereClause) {
+    Select<T> where(String whereClause) {
         this.whereClause = whereClause;
         return this;
     }
 
-    public Select<T> where(Condition... condition) {
+    Select<T> where(Condition... condition) {
 
         mergeConditions(condition, Condition.Type.AND);
 

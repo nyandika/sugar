@@ -15,7 +15,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Field;
@@ -25,8 +25,8 @@ import java.util.List;
 /**
  * @author jonatan.salas
  */
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 18, constants = BuildConfig.class, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class ReflectionUtilTest {
 
     @Test(expected = IllegalAccessException.class)

@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 public class RelationEntityFieldInflater extends EntityFieldInflater {
     private static final String LOG_TAG = "RelEntityFieldInflater";
 
-    protected Object relationObject;
+    private Object relationObject;
 
     public RelationEntityFieldInflater(Field field, Cursor cursor, Object object, Class<?> fieldType, Object relationObject) {
         super(field, cursor, object, fieldType);

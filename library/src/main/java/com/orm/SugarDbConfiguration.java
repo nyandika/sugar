@@ -22,31 +22,31 @@ public class SugarDbConfiguration {
      */
     private Long pageSize;
 
-    public SugarDbConfiguration() { }
+    SugarDbConfiguration() { }
 
-    public Locale getDatabaseLocale() {
+    Locale getDatabaseLocale() {
         return databaseLocale;
     }
 
-    public SugarDbConfiguration setDatabaseLocale(Locale databaseLocale) {
+    SugarDbConfiguration setDatabaseLocale(Locale databaseLocale) {
         this.databaseLocale = databaseLocale;
         return this;
     }
 
-    public Long getMaxSize() {
+    Long getMaxSize() {
         return maxSize;
     }
 
-    public SugarDbConfiguration setMaxSize(Long maxSize) {
+    SugarDbConfiguration setMaxSize(Long maxSize) {
         this.maxSize = maxSize;
         return this;
     }
 
-    public Long getPageSize() {
+    Long getPageSize() {
         return pageSize;
     }
 
-    public SugarDbConfiguration setPageSize(Long pageSize) {
+    SugarDbConfiguration setPageSize(Long pageSize) {
         this.pageSize = pageSize;
         return this;
     }

@@ -35,15 +35,15 @@ public class Condition {
         NOT
     }
 
-    public Condition(String property) {
+    private Condition(String property) {
         this.property = property;
     }
 
-    public static Condition prop(String property) {
+    static Condition prop(String property) {
         return new Condition(property);
     }
 
-    public Condition eq(Object value) {
+    Condition eq(Object value) {
         if (value == null) {
             return isNull();
         }
@@ -64,7 +64,7 @@ public class Condition {
         return this;
     }
 
-    public Condition notEq(Object value) {
+    Condition notEq(Object value) {
         if (value == null) {
             return isNotNull();
         }
@@ -85,19 +85,19 @@ public class Condition {
         return this;
     }
 
-    public Condition isNull() {
+    Condition isNull() {
         setValue(null);
         check = Check.IS_NULL;
         return this;
     }
 
-    public Condition isNotNull() {
+    Condition isNotNull() {
         setValue(null);
         check = Check.IS_NOT_NULL;
         return this;
     }
 
-    public String getProperty() {
+    String getProperty() {
         return property;
     }
 
@@ -105,11 +105,11 @@ public class Condition {
         return value;
     }
 
-    public Check getCheck() {
+    Check getCheck() {
         return check;
     }
 
-    public String getCheckSymbol() {
+    String getCheckSymbol() {
         return check.getSymbol();
     }
 

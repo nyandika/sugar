@@ -257,7 +257,7 @@ public final class ReflectionUtil {
         }
     }
 
-    public static void setFieldValueForId(Object object, Long value) {
+    static void setFieldValueForId(Object object, Long value) {
         try {
             Field field = getDeepField("id", object.getClass());
             field.setAccessible(true);

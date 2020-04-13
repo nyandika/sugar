@@ -9,7 +9,7 @@ import com.orm.model.onetomany.WithoutOneToManyAnnotationRelationModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
@@ -22,8 +22,8 @@ import static com.orm.SugarRecord.save;
  * Created by Łukasz Wesołowski on 28.07.2016.
  */
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 18, constants = BuildConfig.class, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public class OneToManyTest {
     @Test
     public void shouldSaveWithOneToManyRelation() {

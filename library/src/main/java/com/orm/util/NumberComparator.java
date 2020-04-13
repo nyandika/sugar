@@ -7,7 +7,7 @@ import static java.lang.Character.isSpaceChar;
 
 public class NumberComparator implements Comparator<Object> {
 
-    protected static char charAt(String s, int i) {
+    static char charAt(String s, int i) {
         if (i >= s.length()) {
             return '\000';
         }
@@ -15,7 +15,7 @@ public class NumberComparator implements Comparator<Object> {
         return s.charAt(i);
     }
 
-    protected int compareRight(String a, String b) {
+    int compareRight(String a, String b) {
         int bias = 0;
         int ia = 0;
         int ib = 0;

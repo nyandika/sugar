@@ -4,7 +4,7 @@ import com.orm.dsl.BuildConfig;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
@@ -16,8 +16,8 @@ import static org.junit.Assert.assertNull;
 /**
  * @author jonatan.salas
  */
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 16, constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 16)
 public final class SugarDbConfigurationTest {
 
     @Test

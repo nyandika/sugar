@@ -33,7 +33,7 @@ public class SugarContext {
         dbConfiguration = null;
     }
 
-    public static void init(Context context, SugarDbConfiguration configuration) {
+    static void init(Context context, SugarDbConfiguration configuration) {
         init(context);
         dbConfiguration = configuration;
     }
@@ -59,7 +59,7 @@ public class SugarContext {
         }
     }
 
-    public static SugarDbConfiguration getDbConfiguration() {
+    static SugarDbConfiguration getDbConfiguration() {
         return dbConfiguration;
     }
 

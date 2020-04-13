@@ -14,7 +14,10 @@ android {
         }
     }
     testOptions {
-        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
     }
     lintOptions {
         abortOnError false

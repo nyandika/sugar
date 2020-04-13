@@ -16,19 +16,19 @@ public final class ManifestHelper {
     /**
      * Key for the database name meta data.
      */
-    public final static String METADATA_DATABASE = "DATABASE";
+    private final static String METADATA_DATABASE = "DATABASE";
 
     /**
      * Key for the database version meta data.
      */
-    public final static String METADATA_VERSION = "VERSION";
-    public final static String METADATA_DOMAIN_PACKAGE_NAME = "DOMAIN_PACKAGE_NAME";
-    public final static String METADATA_QUERY_LOG = "QUERY_LOG";
+    private final static String METADATA_VERSION = "VERSION";
+    private final static String METADATA_DOMAIN_PACKAGE_NAME = "DOMAIN_PACKAGE_NAME";
+    private final static String METADATA_QUERY_LOG = "QUERY_LOG";
 
     /**
      * The default name for the database unless specified in the AndroidManifest.
      */
-    public final static String DATABASE_DEFAULT_NAME = "Sugar.db";
+    final static String DATABASE_DEFAULT_NAME = "Sugar.db";
 
     //Prevent instantiation
     private ManifestHelper() { }
@@ -70,7 +70,7 @@ public final class ManifestHelper {
      * @return the value for the {@value #METADATA_DATABASE} meta data in the AndroidManifest or
      *         {@link #DATABASE_DEFAULT_NAME} if not present
      */
-    public static String getDatabaseName() {
+    static String getDatabaseName() {
         String databaseName = getMetaDataString(METADATA_DATABASE);
 
         if (databaseName == null) {
@@ -127,7 +127,7 @@ public final class ManifestHelper {
 
     private static Boolean getMetaDataBoolean(String name) {
         PackageManager pm = getPackageManager();
-        Boolean value = false;
+        boolean value = false;
 
         try {
             ApplicationInfo ai = pm.getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);

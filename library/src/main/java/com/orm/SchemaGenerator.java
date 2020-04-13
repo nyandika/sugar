@@ -9,11 +9,10 @@ import com.orm.annotation.Column;
 import com.orm.annotation.MultiUnique;
 import com.orm.annotation.NotNull;
 import com.orm.annotation.Unique;
-import com.orm.dsl.BuildConfig;
 import com.orm.helper.ManifestHelper;
+import com.orm.helper.NamingHelper;
 import com.orm.util.KeyWordUtil;
 import com.orm.util.MigrationFileParser;
-import com.orm.helper.NamingHelper;
 import com.orm.util.NumberComparator;
 import com.orm.util.QueryBuilder;
 import com.orm.util.ReflectionUtil;
@@ -28,38 +27,39 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.orm.util.ReflectionUtil.getDomainClasses;
 import static com.orm.util.ContextUtil.getAssets;
+import static com.orm.util.ReflectionUtil.getDomainClasses;
 
-public class SchemaGenerator {
-    public static final String NULL = " NULL";
-    public static final String NOT_NULL = " NOT NULL";
-    public static final String UNIQUE = " UNIQUE";
-    public static final String SUGAR = "Sugar";
+class SchemaGenerator {
+    private static final String NULL = " NULL";
+    private static final String NOT_NULL = " NOT NULL";
+    private static final String UNIQUE = " UNIQUE";
+    private static final String SUGAR = "Sugar";
 
     //Prevent instantiation
-    private SchemaGenerator() { }
+    private SchemaGenerator() {
+    }
 
-    public static SchemaGenerator getInstance() {
+    static SchemaGenerator getInstance() {
         return new SchemaGenerator();
     }
 
-    public void createDatabase(SQLiteDatabase sqLiteDatabase) {
+    void createDatabase(SQLiteDatabase sqLiteDatabase) {
         List<Class> domainClasses = getDomainClasses();
         for (Class domain : domainClasses) {
             createTable(domain, sqLiteDatabase);
-            afterTableCreated(domain,sqLiteDatabase);
+            afterTableCreated(domain, sqLiteDatabase);
         }
 
     }
 
-    public void afterTableCreated(Class<?> table, SQLiteDatabase sqLiteDatabase) {
+    private void afterTableCreated(Class<?> table, SQLiteDatabase sqLiteDatabase) {
         String fileName = table.getSimpleName() + ".sql";
-        executeScript(sqLiteDatabase,"sugar_after_create/" ,fileName);
+        executeScript(sqLiteDatabase, "sugar_after_create/", fileName);
 
     }
 
-    public void doUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    void doUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         List<Class> domainClasses = getDomainClasses();
         String sql = "select count(*) from sqlite_master where type='table' and name='%s';";
 
@@ -75,7 +75,7 @@ public class SchemaGenerator {
         executeSugarUpgrade(sqLiteDatabase, oldVersion, newVersion);
     }
 
-    protected ArrayList<String> getColumnNames(SQLiteDatabase sqLiteDatabase, String tableName) {
+    ArrayList<String> getColumnNames(SQLiteDatabase sqLiteDatabase, String tableName) {
         Cursor resultsQuery = sqLiteDatabase.query(tableName, null, null, null, null, null, null);
         //Check if columns match vs the one on the domain class
         ArrayList<String> columnNames = new ArrayList<>();
@@ -88,7 +88,7 @@ public class SchemaGenerator {
     }
 
 
-    public void deleteTables(SQLiteDatabase sqLiteDatabase) {
+    void deleteTables(SQLiteDatabase sqLiteDatabase) {
         List<Class> tables = getDomainClasses();
         for (Class table : tables) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + NamingHelper.toTableName(table));
@@ -102,26 +102,26 @@ public class SchemaGenerator {
             List<String> files = Arrays.asList(getAssets().list("sugar_upgrades"));
             Collections.sort(files, new NumberComparator());
             for (String file : files) {
-                if(ManifestHelper.isDebugEnabled()) {
+                if (ManifestHelper.isDebugEnabled()) {
                     Log.i(SUGAR, "filename : " + file);
                 }
 
                 try {
-                    int version = Integer.valueOf(file.replace(".sql", ""));
+                    int version = Integer.parseInt(file.replace(".sql", ""));
 
                     if ((version > oldVersion) && (version <= newVersion)) {
-                        executeScript(db,"sugar_upgrades/" ,file);
+                        executeScript(db, "sugar_upgrades/", file);
                         isSuccess = true;
                     }
                 } catch (NumberFormatException e) {
-                    if(ManifestHelper.isDebugEnabled()) {
+                    if (ManifestHelper.isDebugEnabled()) {
                         Log.i(SUGAR, "not a sugar script. ignored." + file);
                     }
                 }
 
             }
         } catch (IOException e) {
-            if(ManifestHelper.isDebugEnabled()) {
+            if (ManifestHelper.isDebugEnabled()) {
                 Log.e(SUGAR, e.getMessage());
             }
         }
@@ -129,7 +129,7 @@ public class SchemaGenerator {
         return isSuccess;
     }
 
-    private void executeScript(SQLiteDatabase db,String path ,String file) {
+    private void executeScript(SQLiteDatabase db, String path, String file) {
         try {
             InputStream is = getAssets().open(path + file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -139,8 +139,8 @@ public class SchemaGenerator {
                 sb.append(line);
             }
             MigrationFileParser migrationFileParser = new MigrationFileParser(sb.toString());
-            for(String statement: migrationFileParser.getStatements()){
-                if(ManifestHelper.isDebugEnabled()) {
+            for (String statement : migrationFileParser.getStatements()) {
+                if (ManifestHelper.isDebugEnabled()) {
                     Log.i("Sugar script", statement);
                 }
                 if (!statement.isEmpty()) {
@@ -149,12 +149,12 @@ public class SchemaGenerator {
             }
 
         } catch (IOException e) {
-            if(ManifestHelper.isDebugEnabled()) {
+            if (ManifestHelper.isDebugEnabled()) {
                 Log.e(SUGAR, e.getMessage());
             }
         }
 
-        if(ManifestHelper.isDebugEnabled()) {
+        if (ManifestHelper.isDebugEnabled()) {
             Log.i(SUGAR, "Script executed");
         }
     }
@@ -193,22 +193,22 @@ public class SchemaGenerator {
         }
 
         for (String command : alterCommands) {
-            if(ManifestHelper.isDebugEnabled()) {
+            if (ManifestHelper.isDebugEnabled()) {
                 Log.i("Sugar", command);
             }
             sqLiteDatabase.execSQL(command);
         }
     }
 
-    protected String createTableSQL(Class<?> table) {
-        if(ManifestHelper.isDebugEnabled()) {
+    String createTableSQL(Class<?> table) {
+        if (ManifestHelper.isDebugEnabled()) {
             Log.i(SUGAR, "Create table if not exists");
         }
         List<Field> fields = ReflectionUtil.getTableFields(table);
         String tableName = NamingHelper.toTableName(table);
 
-        if(KeyWordUtil.isKeyword(tableName)) {
-            if(ManifestHelper.isDebugEnabled()) {
+        if (KeyWordUtil.isKeyword(tableName)) {
+            if (ManifestHelper.isDebugEnabled()) {
                 Log.i(SUGAR, "ERROR, SQLITE RESERVED WORD USED IN " + tableName);
             }
         }
@@ -220,41 +220,39 @@ public class SchemaGenerator {
             String columnName = NamingHelper.toColumnName(column);
             String columnType = QueryBuilder.getColumnType(column.getType());
 
-            if (columnType != null) {
-                if (columnName.equalsIgnoreCase("Id")) {
-                    continue;
+            if (columnName.equalsIgnoreCase("Id")) {
+                continue;
+            }
+
+            if (column.isAnnotationPresent(Column.class)) {
+                Column columnAnnotation = column.getAnnotation(Column.class);
+                columnName = columnAnnotation.name();
+
+                sb.append(", ").append(columnName).append(" ").append(columnType);
+
+                if (columnAnnotation.notNull()) {
+                    if (columnType.endsWith(NULL)) {
+                        sb.delete(sb.length() - 5, sb.length());
+                    }
+                    sb.append(NOT_NULL);
                 }
 
-                if (column.isAnnotationPresent(Column.class)) {
-                    Column columnAnnotation = column.getAnnotation(Column.class);
-                    columnName = columnAnnotation.name();
+                if (columnAnnotation.unique()) {
+                    sb.append(UNIQUE);
+                }
 
-                    sb.append(", ").append(columnName).append(" ").append(columnType);
+            } else {
+                sb.append(", ").append(columnName).append(" ").append(columnType);
 
-                    if (columnAnnotation.notNull()) {
-                        if (columnType.endsWith(NULL)) {
-                            sb.delete(sb.length() - 5, sb.length());
-                        }
-                        sb.append(NOT_NULL);
+                if (column.isAnnotationPresent(NotNull.class)) {
+                    if (columnType.endsWith(NULL)) {
+                        sb.delete(sb.length() - 5, sb.length());
                     }
+                    sb.append(NOT_NULL);
+                }
 
-                    if (columnAnnotation.unique()) {
-                        sb.append(UNIQUE);
-                    }
-
-                } else {
-                    sb.append(", ").append(columnName).append(" ").append(columnType);
-
-                    if (column.isAnnotationPresent(NotNull.class)) {
-                        if (columnType.endsWith(NULL)) {
-                            sb.delete(sb.length() - 5, sb.length());
-                        }
-                        sb.append(NOT_NULL);
-                    }
-
-                    if (column.isAnnotationPresent(Unique.class)) {
-                        sb.append(UNIQUE);
-                    }
+                if (column.isAnnotationPresent(Unique.class)) {
+                    sb.append(UNIQUE);
                 }
             }
         }
@@ -265,11 +263,11 @@ public class SchemaGenerator {
             sb.append(", UNIQUE(");
 
             String[] constraintFields = constraint.split(",");
-            for(int i = 0; i < constraintFields.length; i++) {
+            for (int i = 0; i < constraintFields.length; i++) {
                 String columnName = NamingHelper.toSQLNameDefault(constraintFields[i]);
                 sb.append(columnName);
 
-                if(i < (constraintFields.length -1)) {
+                if (i < (constraintFields.length - 1)) {
                     sb.append(",");
                 }
             }
@@ -278,14 +276,14 @@ public class SchemaGenerator {
         }
 
         sb.append(" ) ");
-        if(ManifestHelper.isDebugEnabled()) {
+        if (ManifestHelper.isDebugEnabled()) {
             Log.i(SUGAR, "Creating table " + tableName);
         }
 
         return sb.toString();
     }
 
-    protected void createTable(Class<?> table, SQLiteDatabase sqLiteDatabase) {
+    void createTable(Class<?> table, SQLiteDatabase sqLiteDatabase) {
         String createSQL = createTableSQL(table);
 
         if (!createSQL.isEmpty()) {
