@@ -5,7 +5,7 @@ import android.database.Cursor;
 import java.lang.reflect.Field;
 
 /**
- * Created by Łukasz Wesołowski on 03.08.2016.
+ * Created by Lukasz Wesołowski on 03.08.2016.
  */
 public abstract class FieldInflater {
     protected Field field;

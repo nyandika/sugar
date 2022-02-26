@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Łukasz Wesołowski on 03.08.2016.
+ * Created by lukasz Wesołowski on 03.08.2016.
  */
 public class EntityInflater {
     private Cursor cursor;

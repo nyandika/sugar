@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * Created by Łukasz Wesołowski on 03.08.2016.
+ * Created by Lukasz Wesołowski on 03.08.2016.
  */
 public class ListFieldInflater extends FieldInflater {
     private static final String LOG_TAG = "ListFieldInflater";

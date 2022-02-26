@@ -8,7 +8,7 @@ import com.orm.helper.NamingHelper;
 import java.lang.reflect.Field;
 
 /**
- * Created by Łukasz Wesołowski on 03.08.2016.
+ * Created by Lukasz Wesołowski on 03.08.2016.
  */
 public class EntityFieldInflater extends FieldInflater {
     private static final String LOG_TAG = "EntityFieldInflater";
