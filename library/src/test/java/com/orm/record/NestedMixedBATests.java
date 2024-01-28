@@ -1,8 +1,11 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.count;
+import static com.orm.SugarRecord.listAll;
+import static com.orm.SugarRecord.save;
+import static org.junit.Assert.assertEquals;
+
 import com.orm.app.ClientApp;
-import com.orm.SugarRecord;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.NestedMixedBAModel;
 import com.orm.model.RelationshipMixedAModel;
 import com.orm.model.SimpleAnnotatedModel;
@@ -14,14 +17,8 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.count;
-import static com.orm.SugarRecord.listAll;
-
-import static org.junit.Assert.assertEquals;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class NestedMixedBATests {
 
     @Test

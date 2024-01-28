@@ -1,25 +1,28 @@
 package com.orm.util;
 
+import static com.orm.util.ContextUtil.getAssets;
+import static com.orm.util.ContextUtil.getContext;
+import static com.orm.util.ContextUtil.getPackageManager;
+import static com.orm.util.ContextUtil.getPackageName;
+import static com.orm.util.ContextUtil.getSharedPreferences;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
 import android.content.Context;
 
-import com.orm.app.ClientApp;
 import com.orm.SugarContext;
-import com.orm.dsl.BuildConfig;
+import com.orm.app.ClientApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static com.orm.util.ContextUtil.*;
-
 /**
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class ContextUtilTest {
 
     @Test(expected = IllegalAccessException.class)

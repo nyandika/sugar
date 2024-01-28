@@ -1,9 +1,16 @@
 package com.orm.helper;
 
+import static com.orm.helper.NamingHelper.toColumnName;
+import static com.orm.helper.NamingHelper.toSQLNameDefault;
+import static com.orm.helper.NamingHelper.toTableName;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.TestRecord;
 import com.orm.util.ReflectionUtil;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -13,11 +20,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.orm.helper.NamingHelper.*;
-import static junit.framework.Assert.*;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class NamingHelperTest {
 
     @Test(expected = IllegalAccessException.class)
@@ -30,7 +34,7 @@ public final class NamingHelperTest {
     public void testToSQLNameFromField() {
         List<Field> fieldList = ReflectionUtil.getTableFields(TestRecord.class);
 
-        if (null != fieldList && !fieldList.isEmpty()) {
+        if (!fieldList.isEmpty()) {
             List<String> columnList = new ArrayList<>();
 
             for(Field field: fieldList) {

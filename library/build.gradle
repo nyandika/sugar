@@ -1,28 +1,46 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 32
-
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 32
-        versionCode 8
-        versionName "1.6.0"
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode 9
+        versionName "1.6.1"
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
         }
     }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
         }
     }
+
     lint {
         abortOnError false
     }
+
+    namespace 'com.orm.dsl'
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
+    testCoverage.jacocoVersion = "0.8.11"
 }
 
 def githubProperties = new Properties()
@@ -30,10 +48,8 @@ githubProperties.load(new FileInputStream(rootProject.file("github.properties"))
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.2.1'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
 }
-
-apply from: '../maven-publish-helper.gradle'
 
 publishing {
     publications {
@@ -41,6 +57,10 @@ publishing {
             group 'com.github.nyandika'
             artifactId 'sugar'
             version android.defaultConfig.versionName
+
+            afterEvaluate {
+                from components.release
+            }
         }
     }
 

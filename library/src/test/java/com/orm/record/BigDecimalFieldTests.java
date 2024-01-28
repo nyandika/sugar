@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class BigDecimalFieldTests {
     private BigDecimal decimal = new BigDecimal(1234.5678901234567890123456789);
 

@@ -2,7 +2,6 @@ package com.orm.record;
 
 import com.orm.SugarRecord;
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.TestRecord;
 
 import junit.framework.Assert;
@@ -18,7 +17,7 @@ import java.util.List;
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class UpdateInTxTest {
 
     @Test

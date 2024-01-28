@@ -1,7 +1,26 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.count;
+import static com.orm.SugarRecord.delete;
+import static com.orm.SugarRecord.deleteAll;
+import static com.orm.SugarRecord.deleteInTx;
+import static com.orm.SugarRecord.executeQuery;
+import static com.orm.SugarRecord.find;
+import static com.orm.SugarRecord.findAll;
+import static com.orm.SugarRecord.findAsIterator;
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.findWithQuery;
+import static com.orm.SugarRecord.findWithQueryAsIterator;
+import static com.orm.SugarRecord.listAll;
+import static com.orm.SugarRecord.save;
+import static com.orm.SugarRecord.saveInTx;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.helper.NamingHelper;
 import com.orm.model.SimpleAnnotatedModel;
 
@@ -16,29 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.count;
-import static com.orm.SugarRecord.deleteAll;
-import static com.orm.SugarRecord.delete;
-import static com.orm.SugarRecord.deleteInTx;
-import static com.orm.SugarRecord.listAll;
-import static com.orm.SugarRecord.findById;
-import static com.orm.SugarRecord.saveInTx;
-import static com.orm.SugarRecord.find;
-import static com.orm.SugarRecord.findAsIterator;
-import static com.orm.SugarRecord.findWithQuery;
-import static com.orm.SugarRecord.findAll;
-import static com.orm.SugarRecord.findWithQueryAsIterator;
-import static com.orm.SugarRecord.executeQuery;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class SimpleAnnotatedModelTests {
 
     @Test
@@ -76,23 +74,23 @@ public final class SimpleAnnotatedModelTests {
     public void whereCountTest() throws Exception {
         save(new SimpleAnnotatedModel());
         save(new SimpleAnnotatedModel());
-        assertEquals(1L, count(SimpleAnnotatedModel.class, "id = ?", new String[]{"1"}));
+        assertEquals(1L, count(SimpleAnnotatedModel.class, "id = ?", "1"));
     }
 
     @Test
     public void whereNoCountTest() throws Exception {
-        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", new String[]{"1"}));
+        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", "1"));
         save(new SimpleAnnotatedModel());
         save(new SimpleAnnotatedModel());
-        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", new String[]{"3"}));
-        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", new String[]{"a"}));
+        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", "3"));
+        assertEquals(0L, count(SimpleAnnotatedModel.class, "id = ?", "a"));
     }
 
     @Test
     public void whereBrokenCountTest() throws Exception {
         save(new SimpleAnnotatedModel());
         save(new SimpleAnnotatedModel());
-        assertEquals(-1L, count(SimpleAnnotatedModel.class, "di = ?", new String[]{"1"}));
+        assertEquals(-1L, count(SimpleAnnotatedModel.class, "di = ?", "1"));
     }
 
     @Test
@@ -246,7 +244,7 @@ public final class SimpleAnnotatedModelTests {
     @Test
     public void findByIdStringsOneTest() throws Exception {
         save(new SimpleAnnotatedModel());
-        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, new String[]{"1"});
+        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, "1");
         assertEquals(1, models.size());
         assertEquals(1L, models.get(0).getId().longValue());
     }
@@ -256,7 +254,7 @@ public final class SimpleAnnotatedModelTests {
         save(new SimpleAnnotatedModel());
         save(new SimpleAnnotatedModel());
         save(new SimpleAnnotatedModel());
-        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, new String[]{"1", "3"});
+        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, "1", "3");
         assertEquals(2, models.size());
         assertEquals(Long.valueOf(1L), models.get(0).getId());
         assertEquals(Long.valueOf(3L), models.get(1).getId());
@@ -267,7 +265,7 @@ public final class SimpleAnnotatedModelTests {
         for (int i = 1; i <= 10; i++) {
             save(new SimpleAnnotatedModel());
         }
-        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, new String[]{"1", "3", "6", "10"});
+        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, "1", "3", "6", "10");
         assertEquals(4, models.size());
         assertEquals(Long.valueOf(1L), models.get(0).getId());
         assertEquals(Long.valueOf(3L), models.get(1).getId());
@@ -280,7 +278,7 @@ public final class SimpleAnnotatedModelTests {
         for (int i = 1; i <= 10; i++) {
             save(new SimpleAnnotatedModel());
         }
-        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, new String[]{"10", "6", "3", "1"});
+        List<SimpleAnnotatedModel> models = findById(SimpleAnnotatedModel.class, "10", "6", "3", "1");
         assertEquals(4, models.size());
         // The order of the query doesn't matter
         assertEquals(Long.valueOf(1L), models.get(0).getId());

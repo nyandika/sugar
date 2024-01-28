@@ -1,7 +1,11 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.save;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.FloatFieldAnnotatedModel;
 import com.orm.model.FloatFieldExtendedModel;
 
@@ -10,15 +14,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.findById;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 @SuppressWarnings("all")
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class FloatFieldTests {
     Float aFloat = Float.valueOf(25F);
 

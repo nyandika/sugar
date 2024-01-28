@@ -6,7 +6,6 @@ import android.database.Cursor;
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.TestRecord;
 import com.orm.model.foreignnull.OriginRecord;
 import com.orm.query.Select;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class ReflectionUtilTest {
 
     @Test(expected = IllegalAccessException.class)
@@ -44,8 +43,8 @@ public final class ReflectionUtilTest {
             strings.add(field.getName());
         }
 
-        Assert.assertEquals(true, strings.contains("id"));
-        Assert.assertEquals(true, strings.contains("name"));
+        Assert.assertTrue(strings.contains("id"));
+        Assert.assertTrue(strings.contains("name"));
     }
 
     @Test(expected = NoSuchFieldException.class)
@@ -74,7 +73,7 @@ public final class ReflectionUtilTest {
     @Test
     public void testGetAllClasses() {
         List<Class> classes = ReflectionUtil.getDomainClasses();
-        Assert.assertEquals(46, classes.size());
+        Assert.assertEquals(92, classes.size());
     }
 
     @Test(expected = NoSuchFieldException.class)

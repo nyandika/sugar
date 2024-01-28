@@ -1,23 +1,19 @@
 package com.orm;
 
-import com.orm.dsl.BuildConfig;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 16)
 public final class SugarDbConfigurationTest {
 
     @Test

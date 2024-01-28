@@ -8,9 +8,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:8.2.2'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
-        classpath 'org.jacoco:org.jacoco.core:0.8.7'
+        classpath 'org.jacoco:org.jacoco.core:0.8.11'
     }
 }
 
@@ -37,15 +37,15 @@ subprojects { proj ->
     apply plugin: 'jacoco'
 
     jacoco {
-        version "0.8.1"
+        version "0.8.11"
     }
 
     task jacocoTestReport(type: JacocoReport) {
         group = "Reporting"
         description = "Generate Jacoco coverage reports after running tests."
         reports {
-            xml.enabled = true
-            html.enabled = true
+            xml.required.set(true)
+            html.required.set(true)
         }
         getClassDirectories().setFrom(
                 dir: 'build/intermediates/classes/debug',
@@ -64,10 +64,10 @@ subprojects { proj ->
 }
 
 jacoco {
-    toolVersion "0.8.1"
+    toolVersion "0.8.11"
 }
 
-task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
+tasks.register('jacocoRootReport', JacocoReport) {
     group = "Reporting"
     description = 'Generates an aggregate report from all subprojects'
     dependsOn(subprojects.jacocoTestReport)
@@ -78,8 +78,8 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     executionData.from = files(subprojects.jacocoTestReport.executionData)
 
     reports {
-        html.enabled = true
-        xml.enabled = true
+        xml.required.set(true)
+        html.required.set(true)
     }
 
     onlyIf = {

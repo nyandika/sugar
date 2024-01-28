@@ -1,5 +1,9 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.save;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertSame;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +14,6 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.SimpleModel;
 import com.orm.query.Select;
 
@@ -21,12 +24,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import static com.orm.SugarRecord.save;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.Assert.assertSame;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class CursorTests {
 
     @Test

@@ -42,7 +42,7 @@ public final class NumberComparatorTest {
 
     @Test
     public void testCharAt() {
-        Character c = NumberComparator.charAt("Hola", 0);
-        assertEquals("H", c.toString());
+        char c = NumberComparator.charAt("Hola", 0);
+        assertEquals("H", Character.toString(c));
     }
 }

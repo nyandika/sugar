@@ -1,7 +1,26 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.count;
+import static com.orm.SugarRecord.delete;
+import static com.orm.SugarRecord.deleteAll;
+import static com.orm.SugarRecord.deleteInTx;
+import static com.orm.SugarRecord.executeQuery;
+import static com.orm.SugarRecord.find;
+import static com.orm.SugarRecord.findAll;
+import static com.orm.SugarRecord.findAsIterator;
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.findWithQuery;
+import static com.orm.SugarRecord.findWithQueryAsIterator;
+import static com.orm.SugarRecord.listAll;
+import static com.orm.SugarRecord.save;
+import static com.orm.SugarRecord.saveInTx;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.helper.NamingHelper;
 import com.orm.model.SimpleExtendedModel;
 
@@ -16,29 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.count;
-import static com.orm.SugarRecord.delete;
-import static com.orm.SugarRecord.deleteAll;
-import static com.orm.SugarRecord.executeQuery;
-import static com.orm.SugarRecord.find;
-import static com.orm.SugarRecord.findAll;
-import static com.orm.SugarRecord.findById;
-import static com.orm.SugarRecord.findWithQuery;
-import static com.orm.SugarRecord.findAsIterator;
-import static com.orm.SugarRecord.findWithQueryAsIterator;
-import static com.orm.SugarRecord.deleteInTx;
-import static com.orm.SugarRecord.saveInTx;
-import static com.orm.SugarRecord.listAll;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class SimpleExtendedModelTests {
     private String id = "id = ?";
 

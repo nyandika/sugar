@@ -1,11 +1,14 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.save;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
-import com.orm.model.onetomany.OneToManyRelationModel;
 import com.orm.model.onetomany.OneToManyModel;
+import com.orm.model.onetomany.OneToManyRelationModel;
 import com.orm.model.onetomany.WithoutOneToManyAnnotationModel;
 import com.orm.model.onetomany.WithoutOneToManyAnnotationRelationModel;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,15 +18,12 @@ import org.robolectric.annotation.Config;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.orm.SugarRecord.findById;
-import static com.orm.SugarRecord.save;
-
 /**
  * Created by Łukasz Wesołowski on 28.07.2016.
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public class OneToManyTest {
     @Test
     public void shouldSaveWithOneToManyRelation() {

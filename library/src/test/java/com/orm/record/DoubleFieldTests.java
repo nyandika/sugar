@@ -1,8 +1,11 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.save;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.orm.app.ClientApp;
-import com.orm.SugarRecord;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.DoubleFieldAnnotatedModel;
 import com.orm.model.DoubleFieldExtendedModel;
 
@@ -11,14 +14,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.findById;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class DoubleFieldTests {
 
     @Test

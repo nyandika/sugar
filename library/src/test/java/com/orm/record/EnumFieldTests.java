@@ -1,7 +1,14 @@
 package com.orm.record;
 
+import static com.orm.SugarRecord.findById;
+import static com.orm.SugarRecord.save;
+import static com.orm.model.EnumFieldExtendedModel.DefaultEnum;
+import static com.orm.model.EnumFieldExtendedModel.OverrideEnum;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.EnumFieldAnnotatedModel;
 import com.orm.model.EnumFieldExtendedModel;
 
@@ -10,17 +17,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static com.orm.SugarRecord.save;
-import static com.orm.SugarRecord.findById;
-import static com.orm.model.EnumFieldExtendedModel.DefaultEnum;
-import static com.orm.model.EnumFieldExtendedModel.OverrideEnum;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18,  application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class EnumFieldTests {
 
     @Test

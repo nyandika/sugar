@@ -1,9 +1,10 @@
 package com.orm.helper;
 
-import com.orm.app.ClientApp;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+
 import com.orm.SugarContext;
-import com.orm.dsl.BuildConfig;
-import com.orm.helper.SugarTransactionHelper;
+import com.orm.app.ClientApp;
 import com.orm.model.TestRecord;
 
 import org.junit.Before;
@@ -16,14 +17,11 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-
 /**
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class SugarTransactionHelperTest {
     private List<TestRecord> recordList = new ArrayList<>();
     private TestRecord record1 = new TestRecord();

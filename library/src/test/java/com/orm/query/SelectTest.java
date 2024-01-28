@@ -1,7 +1,8 @@
 package com.orm.query;
 
+import static junit.framework.Assert.assertEquals;
+
 import com.orm.app.ClientApp;
-import com.orm.dsl.BuildConfig;
 import com.orm.model.TestRecord;
 
 import org.junit.Test;
@@ -9,10 +10,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertEquals;
-
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 18, application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
 public final class SelectTest {
 
     @Test
