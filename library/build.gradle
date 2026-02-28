@@ -44,7 +44,13 @@ android {
 }
 
 def githubProperties = new Properties()
-githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+def githubPropertiesFile = rootProject.file("github.properties")
+if (githubPropertiesFile.exists()) {
+    githubProperties.load(new FileInputStream(githubPropertiesFile))
+}
+
+def gprUser = (githubProperties['gpr.usr'] ?: System.getenv("GPR_USER"))?.toString()
+def gprKey = (githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY"))?.toString()
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'
@@ -70,10 +76,20 @@ publishing {
             url = uri("https://maven.pkg.github.com/nyandika/sugar")
 
             credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                // Gradle 9 validates these as required; set explicit fallback values.
+                username = gprUser ?: ""
+                password = gprKey ?: ""
             }
         }
     }
 }
 
+tasks.matching { it.name == "publishReleasePublicationToGitHubPackagesRepository" }.configureEach {
+    onlyIf {
+        def hasCreds = gprUser && gprKey
+        if (!hasCreds) {
+            logger.lifecycle("Skipping GitHub Packages publish: set GPR_USER and GPR_API_KEY (or github.properties gpr.usr/gpr.key).")
+        }
+        return hasCreds
+    }
+}
