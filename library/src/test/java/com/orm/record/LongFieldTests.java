@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config;
 
 @SuppressWarnings("all")
 @RunWith(RobolectricTestRunner.class)
-@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, manifest = Config.NONE)
 public final class LongFieldTests {
     private Long aLong = Long.valueOf(25L);
 

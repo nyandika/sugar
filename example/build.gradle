@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 android {
     defaultConfig {
         applicationId "com.example"
-        minSdkVersion 14
-        targetSdkVersion 34
-        compileSdk 34
+        minSdk 21
+        targetSdk 36
+        compileSdk 36
     }
     buildTypes {
         release {
@@ -20,5 +20,5 @@ android {
 
 dependencies {
     implementation project (':library')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
 }

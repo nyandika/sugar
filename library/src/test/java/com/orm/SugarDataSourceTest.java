@@ -21,7 +21,7 @@ import static junit.framework.Assert.*;
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, manifest = Config.NONE)
 public final class SugarDataSourceTest {
     private SugarDataSource<TestRecord> recordSugarDataSource;
 

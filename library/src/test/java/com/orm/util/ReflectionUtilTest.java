@@ -25,7 +25,7 @@ import java.util.List;
  * @author jonatan.salas
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, manifest = Config.NONE)
 public final class ReflectionUtilTest {
 
     @Test(expected = IllegalAccessException.class)

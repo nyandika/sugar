@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(application = ClientApp.class, packageName = "com.orm.model", manifest = Config.NONE)
+@Config(application = ClientApp.class, manifest = Config.NONE)
 public final class SimpleAnnotatedModelTests {
 
     @Test

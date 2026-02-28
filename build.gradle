@@ -8,9 +8,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
-        classpath 'org.jacoco:org.jacoco.core:0.8.11'
+        classpath 'com.android.tools.build:gradle:9.0.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3'
+        classpath 'org.jacoco:org.jacoco.core:0.8.14'
     }
 }
 
@@ -36,8 +36,15 @@ allprojects {
 subprojects { proj ->
     apply plugin: 'jacoco'
 
+    configurations.configureEach {
+        // Since Kotlin 1.8, JDK7/JDK8 extensions are bundled in kotlin-stdlib.
+        // Keeping the old split artifacts on classpath causes duplicate classes.
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
+
     jacoco {
-        version "0.8.11"
+        version "0.8.14"
     }
 
     task jacocoTestReport(type: JacocoReport) {
@@ -64,7 +71,7 @@ subprojects { proj ->
 }
 
 jacoco {
-    toolVersion "0.8.11"
+    toolVersion "0.8.14"
 }
 
 tasks.register('jacocoRootReport', JacocoReport) {
